@@ -108,6 +108,32 @@
           <span class="old-price">$89</span>
           <span class="new-price">$49</span>
           <div class="buy-btn">Buy</div>
+          <div id="paypal-button-container"></div>
+
+          <!-- Add this where you want the button to appear -->
+          <script src="https://www.paypal.com/sdk/js?client-id=ASKIYxYYxBYS40N3WMdO8WWV7N1HLrNA0GwHoGfPC0yRwtstk882zmZWVw8izwcAOg7hIAWkr0ZRjDX8&currency=USD" data-sdk-integration-source="button-factory"></script>
+          <script>
+            paypal.Buttons({
+              createOrder: function(data, actions) {
+                // Set up the transaction
+                return actions.order.create({
+                  purchase_units: [{
+                    amount: {
+                      value: '1.00'
+                    }
+                  }]
+                });
+              },
+              onApprove: function(data, actions) {
+                // Capture the funds from the transaction
+                return actions.order.capture().then(function(details) {
+                  // Show a success message to the buyer
+                  alert('Transaction completed by ' + details.payer.name.given_name);
+                });
+              }
+            }).render('#paypal-button-container');
+          </script>
+
         </div>
       </div>
     </div>
