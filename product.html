@@ -135,6 +135,38 @@
             }).render('#paypal-button-container');
           </script>
 
+          <!-- Stripe button -->
+
+          <button id="checkout-button">Stripe Checkout</button>
+
+          <script src="https://js.stripe.com/v3/"></script>
+
+          <script>
+            var stripe = Stripe('pk_live_51OEWa6KQh2JhASjD76DMUiiJD2VNJ6gVr6vm3a4eLymiJECVKYBk1et58ZKe4gDQNFI9Dghv1YVQ7wyo8iDFXzcw00rS5pSoIT');
+          
+            document.getElementById('checkout-button').addEventListener('click', function () {
+              // Create a Checkout Session
+              fetch('/create-checkout-session', {
+                method: 'POST',
+              })
+              .then(function (response) {
+                return response.json();
+              })
+              .then(function (session) {
+                return stripe.redirectToCheckout({ sessionId: session.id });
+              })
+              .then(function (result) {
+                if (result.error) {
+                  alert(result.error.message);
+                }
+              })
+              .catch(function (error) {
+                console.error('Error:', error);
+              });
+            });
+          </script>
+          
+
         </div>
       </div>
     </div>
