@@ -20,7 +20,7 @@
       <span><a class="title" href="index.html">Fleur Flowers</a></span>
       <ul class="menu">
         <li><a href="index.html#crafts-gallery">Crafts Gallery</a> </li>
-        <li><a href="catalogue.html">Flowers Catalogue</a> </li>
+        <li><a href="catalog.html">Flowers Catalog</a> </li>
         <li><a href="">Contact</a> </li>
       </ul>
       <div class="icons">
@@ -113,31 +113,6 @@
 
           <div id="paypal-button-container" style="width: 288px"></div>
 
-          <!-- PAYPAL BUTTON BEGIN -->
-          <script src="https://www.paypal.com/sdk/js?client-id=AdL_gEK-4S0lCDn1KcAxUuTADOBly4dHK0vWTaCLUO5xpjqv5QHzKjqra_pDzMDLRd2CSE9y37V9y3e4&currency=BRL" data-sdk-integration-source="button-factory"></script>
-          <script>
-            paypal.Buttons({
-              createOrder: function(data, actions) {
-                // Set up the transaction
-                return actions.order.create({
-                  purchase_units: [{
-                    amount: {
-                      value: '1.00'
-                    }
-                  }]
-                });
-              },
-              onApprove: function(data, actions) {
-                // Capture the funds from the transaction
-                return actions.order.capture().then(function(details) {
-                  // Show a success message to the buyer
-                  alert('Transaction completed by ' + details.payer.name.given_name);
-                });
-              }
-            }).render('#paypal-button-container');
-          </script>
-          <!-- PAYPAL BUTTON END -->
-
           <hr/>
 
           <!-- STRIPE BUTTON BEGIN -->
@@ -216,5 +191,30 @@
       </div>
     </div>
   </main>
+
+  <!-- PAYPAL BUTTON BEGIN -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AdL_gEK-4S0lCDn1KcAxUuTADOBly4dHK0vWTaCLUO5xpjqv5QHzKjqra_pDzMDLRd2CSE9y37V9y3e4&currency=BRL" data-sdk-integration-source="button-factory"></script>
+  <script>
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        // Set up the transaction
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: '1.00'
+            }
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        // Capture the funds from the transaction
+        return actions.order.capture().then(function(details) {
+          // Show a success message to the buyer
+          alert('Transaction completed by ' + details.payer.name.given_name);
+        });
+      }
+    }).render('#paypal-button-container');
+  </script>
+  <!-- PAYPAL BUTTON END -->
 </body>
 </html>
